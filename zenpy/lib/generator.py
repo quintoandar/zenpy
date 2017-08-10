@@ -52,9 +52,9 @@ class BaseResultGenerator(collections.Iterable):
             if key != 'results' and type(value) not in (list, dict):
                 setattr(self, key, value)
 
-    def get_next_page(self):
+    def get_next_page(self, key_next_page='next_page'):
         """ Retrieve the next page of results. """
-        url = self._response_json.get('next_page', None)
+        url = self._response_json.get(key_next_page, None)
         if url is None:
             raise StopIteration()
         log.debug("GENERATOR: " + url)
@@ -119,6 +119,8 @@ class ChatResultGenerator(BaseResultGenerator):
     def process_page(self):
         return self.response_handler.deserialize(self._response_json)
 
+    def get_next_page(self, key_next_page='next_page'):
+        return super(self.__class__, self).get_next_page(key_next_page='next_url')
 
 class ViewResultGenerator(BaseResultGenerator):
     def process_page(self):
