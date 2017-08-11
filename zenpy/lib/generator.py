@@ -119,8 +119,8 @@ class ChatResultGenerator(BaseResultGenerator):
     def process_page(self):
         return self.response_handler.deserialize(self._response_json)
 
-    def get_next_page(self, key_next_page='next_page'):
-        return super(self.__class__, self).get_next_page(key_next_page='next_url')
+    def get_next_page(self, key_next_page='next_url'):
+        return super(self.__class__, self).get_next_page(key_next_page=key_next_page)
 
 class ViewResultGenerator(BaseResultGenerator):
     def process_page(self):
